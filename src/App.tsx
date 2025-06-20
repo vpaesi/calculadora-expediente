@@ -50,7 +50,8 @@ export default function App() {
   }
 
   const [turnos, setTurnos] = useState<Turno[]>([{ entrada: "", saida: "" }]);
-  const [tempoDesejado, setTempoDesejado] = useState<string>("6");
+  const [tempoDesejadoHoras, setTempoDesejadoHoras] = useState<string>("6");
+  const [tempoDesejadoMinutos, setTempoDesejadoMinutos] = useState<string>("0");
 
   function atualizarTurno(
     idx: number,
@@ -84,44 +85,48 @@ export default function App() {
     return soma;
   }
 
+  function calculaMinutosDesejados(): number {
+    const horas = Number(tempoDesejadoHoras) || 0;
+    const minutos = Number(tempoDesejadoMinutos) || 0;
+    return horas * 60 + minutos;
+  }
+
   function calculaHorarioFinal(): string | null {
     const totalTrabalhado = calculaMinutosTrabalhados();
-    const tempoDesejadoMinutos = Number(tempoDesejado) * 60;
+    const tempoDesejadoMinutosTotal = calculaMinutosDesejados();
     if (
-      isNaN(tempoDesejadoMinutos) ||
-      tempoDesejadoMinutos <= totalTrabalhado
+      isNaN(tempoDesejadoMinutosTotal) ||
+      tempoDesejadoMinutosTotal <= totalTrabalhado
     ) {
       return null;
     }
-    const faltam = tempoDesejadoMinutos - totalTrabalhado;
+    const faltam = tempoDesejadoMinutosTotal - totalTrabalhado;
 
-    // Procura se há um turno em aberto (entrada preenchida e saída vazia)
     for (let i = turnos.length - 1; i >= 0; i--) {
       const ent = parseHorario(turnos[i].entrada);
       const sai = parseHorario(turnos[i].saida);
       if (ent !== null && (!turnos[i].saida || sai === null)) {
-        // Usuário está no meio de um turno, sugira a saída
         return formatHorario(ent + faltam);
       }
       if (ent !== null && sai !== null && sai >= ent) {
-        // Último turno completo, continue lógica padrão
         return formatHorario(sai + faltam);
       }
     }
-
-    // Se não encontrou nenhum horário válido, retorna null
     return null;
   }
 
   const horarioFinal = calculaHorarioFinal();
   const minutosTrabalhados = calculaMinutosTrabalhados();
+  const tempoDesejadoMinutosTotal = calculaMinutosDesejados();
 
   return (
     <Container>
       <Header tema={tema} toggleTema={toggleTema} />
       <CampoTempoDesejado
-        tempoDesejado={tempoDesejado}
-        setTempoDesejado={setTempoDesejado}
+        tempoDesejadoHoras={tempoDesejadoHoras}
+        tempoDesejadoMinutos={tempoDesejadoMinutos}
+        setTempoDesejadoHoras={setTempoDesejadoHoras}
+        setTempoDesejadoMinutos={setTempoDesejadoMinutos}
       />
       <ListaDeTurnos
         turnos={turnos}
@@ -133,7 +138,7 @@ export default function App() {
       <ResumoJornada
         minutosTrabalhados={minutosTrabalhados}
         horarioFinal={horarioFinal}
-        tempoDesejado={tempoDesejado}
+        tempoDesejadoMinutos={tempoDesejadoMinutosTotal}
       />
       <SectionDivider />
       <Footer />

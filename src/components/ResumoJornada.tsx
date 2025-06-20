@@ -1,13 +1,21 @@
 interface ResumoJornadaProps {
   minutosTrabalhados: number;
   horarioFinal: string | null;
-  tempoDesejado: string;
+  tempoDesejadoMinutos: number;
+}
+
+function formatarHorasMinutos(minutos: number) {
+  const h = Math.floor(minutos / 60);
+  const m = minutos % 60;
+  if (h > 0 && m > 0) return `${h}h e ${m}min`;
+  if (h > 0) return `${h}h`;
+  return `${m}min`;
 }
 
 export function ResumoJornada({
   minutosTrabalhados,
   horarioFinal,
-  tempoDesejado,
+  tempoDesejadoMinutos,
 }: ResumoJornadaProps) {
   const nenhumHorario = minutosTrabalhados === 0 && !horarioFinal;
   const jornadaCompleta = !nenhumHorario && !horarioFinal;
@@ -22,7 +30,7 @@ export function ResumoJornada({
     >
       <p>
         Total trabalhado até agora:{" "}
-        <strong>{(minutosTrabalhados / 60).toFixed(2)} horas</strong>
+        <strong>{formatarHorasMinutos(minutosTrabalhados)}</strong>
       </p>
       {nenhumHorario ? (
         <p className="mt-2 text-gray-600 dark:text-gray-400">
@@ -31,7 +39,7 @@ export function ResumoJornada({
       ) : horarioFinal ? (
         <p className="mt-2 text-red-700 dark:text-red-400 font-semibold">
           Precisa trabalhar até às <span>{horarioFinal}</span> para fechar{" "}
-          {tempoDesejado} horas
+          {formatarHorasMinutos(tempoDesejadoMinutos)}
         </p>
       ) : (
         <p className="mt-2 text-green-900 dark:text-green-100 font-semibold">

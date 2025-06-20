@@ -6,6 +6,7 @@ import { Container } from "./components/Container";
 import { Header } from "./components/Header";
 import { SectionDivider } from "./components/SectionDivider";
 import { Footer } from "./components/Footer";
+import { PomodoroCalculator } from "./components/PomodoroCalculator"; // <-- novo import
 
 interface Turno {
   entrada: string;
@@ -52,6 +53,7 @@ export default function App() {
   const [turnos, setTurnos] = useState<Turno[]>([{ entrada: "", saida: "" }]);
   const [tempoDesejadoHoras, setTempoDesejadoHoras] = useState<string>("6");
   const [tempoDesejadoMinutos, setTempoDesejadoMinutos] = useState<string>("0");
+  const [usarPomodoro, setUsarPomodoro] = useState(false);
 
   function atualizarTurno(
     idx: number,
@@ -120,28 +122,42 @@ export default function App() {
   const tempoDesejadoMinutosTotal = calculaMinutosDesejados();
 
   return (
-    <Container>
-      <Header tema={tema} toggleTema={toggleTema} />
-      <CampoTempoDesejado
-        tempoDesejadoHoras={tempoDesejadoHoras}
-        tempoDesejadoMinutos={tempoDesejadoMinutos}
-        setTempoDesejadoHoras={setTempoDesejadoHoras}
-        setTempoDesejadoMinutos={setTempoDesejadoMinutos}
-      />
-      <ListaDeTurnos
-        turnos={turnos}
-        atualizarTurno={atualizarTurno}
-        adicionarTurno={adicionarTurno}
-        removerTurno={removerTurno} // <-- Passe aqui!
-      />
-      <SectionDivider />
-      <ResumoJornada
-        minutosTrabalhados={minutosTrabalhados}
-        horarioFinal={horarioFinal}
-        tempoDesejadoMinutos={tempoDesejadoMinutosTotal}
-      />
-      <SectionDivider />
-      <Footer />
-    </Container>
+    <div className="min-h-screen flex items-center justify-center
+      bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
+    <div className="flex flex-col md:flex-row items-start justify-center w-full" >
+      <div style={{ marginLeft: "10rem", marginRight: 0, padding: 0, flex: 1.5 }}>
+        <Container>
+          <Header tema={tema} toggleTema={toggleTema} />
+          <CampoTempoDesejado
+            tempoDesejadoHoras={tempoDesejadoHoras}
+            tempoDesejadoMinutos={tempoDesejadoMinutos}
+            setTempoDesejadoHoras={setTempoDesejadoHoras}
+            setTempoDesejadoMinutos={setTempoDesejadoMinutos}
+            usarPomodoro={usarPomodoro}
+            setUsarPomodoro={setUsarPomodoro}
+          />
+          <ListaDeTurnos
+            turnos={turnos}
+            atualizarTurno={atualizarTurno}
+            adicionarTurno={adicionarTurno}
+            removerTurno={removerTurno}
+          />
+          <SectionDivider />
+          <ResumoJornada
+            minutosTrabalhados={minutosTrabalhados}
+            horarioFinal={horarioFinal}
+            tempoDesejadoMinutos={tempoDesejadoMinutosTotal}
+          />
+          <SectionDivider />
+          <Footer />
+        </Container>
+      </div>
+      {usarPomodoro && (
+      <div style={{ marginRight: 0, padding: 0, flex: 2, justifyContent: "center" }}>
+          <PomodoroCalculator />
+        </div>
+      )}
+    </div>
+    </div>
   );
 }

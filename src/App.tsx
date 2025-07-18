@@ -52,7 +52,7 @@ export default function App() {
   }
 
   const [turnos, setTurnos] = useState<Turno[]>([{ entrada: "", saida: "" }]);
-  const [tempoDesejadoHoras, setTempoDesejadoHoras] = useState<string>("6");
+  const [tempoDesejadoHoras, setTempoDesejadoHoras] = useState<string>("8");
   const [tempoDesejadoMinutos, setTempoDesejadoMinutos] = useState<string>("0");
   const [usarPomodoro, setUsarPomodoro] = useState(false);
 
@@ -123,42 +123,45 @@ export default function App() {
   const tempoDesejadoMinutosTotal = calculaMinutosDesejados();
 
   return (
-    <div className="min-h-screen flex items-center justify-center
-      bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
-    <div className="flex flex-col md:flex-row items-start justify-center w-full" >
-      <div style={{ marginLeft: "10rem", marginRight: 0, padding: 0, flex: 1.5 }}>
-        <Container>
-          <Header tema={tema} toggleTema={toggleTema} />
-          <CampoTempoDesejado
-            tempoDesejadoHoras={tempoDesejadoHoras}
-            tempoDesejadoMinutos={tempoDesejadoMinutos}
-            setTempoDesejadoHoras={setTempoDesejadoHoras}
-            setTempoDesejadoMinutos={setTempoDesejadoMinutos}
-            usarPomodoro={usarPomodoro}
-            setUsarPomodoro={setUsarPomodoro}
-          />
-          <ListaDeTurnos
-            turnos={turnos}
-            atualizarTurno={atualizarTurno}
-            adicionarTurno={adicionarTurno}
-            removerTurno={removerTurno}
-          />
-          <SectionDivider />
-          <ResumoJornada
-            minutosTrabalhados={minutosTrabalhados}
-            horarioFinal={horarioFinal}
-            tempoDesejadoMinutos={tempoDesejadoMinutosTotal}
-          />
-          <SectionDivider />
-          <Footer />
-        </Container>
-      </div>
-      {usarPomodoro && (
-        <div style={{ marginRight: 0, padding: 0, flex: 2, justifyContent: "center" }}>
-          <PomodoroApp />
+    <div className="min-h-screen w-full flex items-center justify-center bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-2 md:px-6">
+      <div
+        className={`w-full flex flex-col items-center justify-center gap-8
+        ${usarPomodoro ? "lg:flex-row lg:items-start lg:justify-center" : ""}`}
+        style={{ minHeight: '80vh' }}
+      >
+        <div className="w-full max-w-lg flex-shrink-0">
+          <Container>
+            <Header tema={tema} toggleTema={toggleTema} />
+            <CampoTempoDesejado
+              tempoDesejadoHoras={tempoDesejadoHoras}
+              tempoDesejadoMinutos={tempoDesejadoMinutos}
+              setTempoDesejadoHoras={setTempoDesejadoHoras}
+              setTempoDesejadoMinutos={setTempoDesejadoMinutos}
+              usarPomodoro={usarPomodoro}
+              setUsarPomodoro={setUsarPomodoro}
+            />
+            <ListaDeTurnos
+              turnos={turnos}
+              atualizarTurno={atualizarTurno}
+              adicionarTurno={adicionarTurno}
+              removerTurno={removerTurno}
+            />
+            <SectionDivider />
+            <ResumoJornada
+              minutosTrabalhados={minutosTrabalhados}
+              horarioFinal={horarioFinal}
+              tempoDesejadoMinutos={tempoDesejadoMinutosTotal}
+            />
+            <SectionDivider />
+            <Footer />
+          </Container>
         </div>
-      )}
-    </div>
+        {usarPomodoro && (
+          <div className="w-full max-w-lg flex flex-col items-center justify-center lg:mt-0 mt-8">
+            <PomodoroApp />
+          </div>
+        )}
+      </div>
     </div>
   );
 }

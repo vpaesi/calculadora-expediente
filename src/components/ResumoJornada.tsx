@@ -1,15 +1,10 @@
+
+import { formatarHorasMinutos } from "../utils/time";
+
 interface ResumoJornadaProps {
   minutosTrabalhados: number;
   horarioFinal: string | null;
   tempoDesejadoMinutos: number;
-}
-
-function formatarHorasMinutos(minutos: number) {
-  const h = Math.floor(minutos / 60);
-  const m = minutos % 60;
-  if (h > 0 && m > 0) return `${h}h e ${m}min`;
-  if (h > 0) return `${h}h`;
-  return `${m}min`;
 }
 
 export function ResumoJornada({

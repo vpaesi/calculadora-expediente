@@ -3,6 +3,7 @@ import beepSound from "../../assets/sons/beep.mp3";
 import playSound from "../../assets/sons/play.wav";
 import pauseSound from "../../assets/sons/pause.mp3";
 import type { PomodoroContext } from "./PomodoroApp";
+import { formatarTempo } from "../../utils/time";
 
 const DURACOES = {
   foco: 25 * 60,
@@ -59,13 +60,7 @@ export function PomodoroTimer({ contexto, setContexto, musica, setMusica }: Pomo
     }
   }, [musica]);
 
-  function formatarTempo(seg: number) {
-    const m = Math.floor(seg / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (seg % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
-  }
+
 
   function handleContexto(c: PomodoroContext) {
     setContexto(c);
@@ -95,7 +90,7 @@ export function PomodoroTimer({ contexto, setContexto, musica, setMusica }: Pomo
 
   return (
     <div className="w-full flex flex-col items-center justify-center px-2 sm:px-0">
-      <ul className="flex flex-wrap items-center justify-center gap-2 mb-4">
+      <ul className="flex flex-wrap items-center justify-center gap-2 mb-4 text-base md:text-lg lg:text-xl">
         <li>
           <button
             data-contexto="foco"
@@ -125,11 +120,11 @@ export function PomodoroTimer({ contexto, setContexto, musica, setMusica }: Pomo
         </li>
       </ul>
 
-      <div id="timer" className="text-gray-900 dark:text-gray-100 text-center font-mono text-6xl font-extrabold my-6 break-words w-full">
+      <div id="timer" className="text-gray-900 dark:text-gray-100 text-center font-mono text-5xl md:text-6xl font-extrabold my-6 break-words w-full">
         {formatarTempo(segundos)}
       </div>
 
-      <ul className="flex flex-wrap items-center justify-center gap-2 mb-4">
+      <ul className="flex flex-wrap items-center justify-center gap-2 mb-4 text-base md:text-lg">
         <li>
           <label className="flex items-center cursor-pointer">
             <input
@@ -148,7 +143,7 @@ export function PomodoroTimer({ contexto, setContexto, musica, setMusica }: Pomo
           <label htmlFor="alternar-musica" className="text-base text-gray-900 dark:text-gray-100 select-none">Música</label>
         </li>
       </ul>
-      <div className="flex flex-wrap items-center justify-center gap-4 mt-4">
+      <div className="flex flex-wrap items-center justify-center gap-4 mt-4 text-base md:text-lg">
         <button
           id="start-pause"
           className="flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-purple-400 to-blue-900 text-white font-semibold text-base shadow-md hover:from-purple-500 hover:to-blue-800 transition"

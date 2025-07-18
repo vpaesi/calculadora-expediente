@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { PomodoroTaskForm } from "./PomodoroTaskForm";
+import { PomodoroTaskItem } from "./PomodoroTaskItem";
 
 export interface Task {
   description: string;
@@ -85,8 +86,8 @@ export function PomodoroTaskList() {
   }
 
   return (
-    <div className="w-full max-w-lg bg-white dark:bg-gray-900 rounded-xl border border-gray-300 dark:border-gray-700 shadow-md mt-8 p-6 relative">
-      <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 border-b border-gray-200 dark:border-gray-700 pb-4 mb-4 relative">
+    <div className="w-full max-w-lg bg-white dark:bg-gray-900 rounded-xl border border-gray-300 dark:border-gray-700 shadow-md p-6 mb-6 relative">
+      <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 border-b border-gray-200 dark:border-gray-700 pb-4 mb-4 relative text-base md:text-lg lg:text-xl">
         <div className="flex flex-col">
           <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-widest">#Em andamento:</span>
           <span className="text-base text-gray-900 dark:text-gray-100 font-medium min-h-[1.5rem]">{selectedTask ? selectedTask.description : ""}</span>
@@ -125,39 +126,20 @@ export function PomodoroTaskList() {
           )}
         </div>
       </header>
-      <ul className="space-y-2 mb-4">
+      <ul className="space-y-2 mb-4 text-base md:text-lg">
         {tasks.map((task) => (
-          <li
+          <PomodoroTaskItem
             key={task.id}
-            className={`flex items-center gap-6 rounded px-3 py-2 border transition cursor-pointer ${task.finished ? "bg-green-50 dark:bg-green-900 border-green-200 dark:border-green-800 opacity-60" : "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700"} ${selectedTask?.id === task.id ? "ring-2 ring-purple-400" : ""}`}
-            onClick={() => handleSelect(task)}
-          >
-            <button
-              onClick={e => { e.stopPropagation(); handleToggleFinish(task); }}
-              className={`w-8 h-8 flex items-center justify-center rounded-full border-2 ${task.finished ? "border-green-400 bg-green-200 dark:bg-green-700" : "border-gray-400 bg-white dark:bg-gray-900 hover:bg-purple-100 dark:hover:bg-purple-900"} transition text-lg`}
-              title={task.finished ? "Desmarcar tarefa" : "Concluir tarefa"}
-            >
-              <i className={`bi ${task.finished ? "bi-arrow-counterclockwise" : "bi-check2"}`}></i>
-            </button>
-            <span className={`flex-1 text-base font-medium flex items-center ${task.finished ? "line-through text-gray-400 dark:text-gray-500" : "text-gray-900 dark:text-gray-100"}`}
-              style={{ minHeight: '2.5rem' }}
-            >
-              {task.description}
-            </span>
-            <button
-              disabled={task.finished}
-              onClick={e => {
-                e.stopPropagation();
-                setSelectedTask(task);
-                setEdit(true);
-                setShowForm(true);
-              }}
-              className="p-2 rounded hover:bg-purple-100 dark:hover:bg-purple-900 transition disabled:opacity-50 text-lg flex items-center"
-              title="Editar tarefa"
-            >
-              <i className="bi bi-pencil"></i>
-            </button>
-          </li>
+            task={task}
+            onSelect={handleSelect}
+            onToggleFinish={handleToggleFinish}
+            onEdit={(t) => {
+              setSelectedTask(t);
+              setEdit(true);
+              setShowForm(true);
+            }}
+            selected={selectedTask?.id === task.id}
+          />
         ))}
       </ul>
       {showForm && (

@@ -57,7 +57,7 @@ export function PomodoroTaskForm({ edit, initialValue, onCancel, onDelete, onSav
             <i className="bi bi-x"></i> Cancelar
           </button>
           <button
-            className="flex items-center gap-2 px-8 py-3 rounded-xl border-2 border-white text-lg font-bold text-white bg-black/40 hover:bg-purple-900/40 transition shadow"
+            className="flex items-center gap-2 px-6 py-3 rounded-xl border-2 border-white text-lg font-bold text-white bg-black/30 hover:bg-purple-900/40 transition shadow"
           >
             <i className="bi bi-save"></i> Salvar
           </button>

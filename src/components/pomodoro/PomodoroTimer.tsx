@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import beepSound from "../../assets/sons/beep.mp3";
 import playSound from "../../assets/sons/play.wav";
 import pauseSound from "../../assets/sons/pause.mp3";
+import musicaSound from "../../assets/sons/luna-rise-part-one.mp3";
 import type { PomodoroContext } from "./PomodoroApp";
 import { formatarTempo } from "../../utils/time";
 
@@ -52,9 +53,13 @@ export function PomodoroTimer({ contexto, setContexto, musica, setMusica }: Pomo
     };
   }, [rodando]);
 
+
   useEffect(() => {
     if (musica) {
-      audioMusica.current?.play();
+      if (audioMusica.current) {
+        audioMusica.current.currentTime = 0;
+        audioMusica.current.play();
+      }
     } else {
       audioMusica.current?.pause();
     }
@@ -161,7 +166,7 @@ export function PomodoroTimer({ contexto, setContexto, musica, setMusica }: Pomo
           <span>Reiniciar</span>
         </button>
       </div>
-      <audio ref={audioMusica} loop />
+      <audio ref={audioMusica} src={musicaSound} loop />
       <audio ref={audioBeep} src={beepSound} />
       <audio ref={audioPlay} src={playSound} />
       <audio ref={audioPause} src={pauseSound} />

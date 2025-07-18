@@ -7,7 +7,6 @@ import { Container } from "./components/Container";
 import { Header } from "./components/Header";
 import { SectionDivider } from "./components/SectionDivider";
 import { Footer } from "./components/Footer";
-import { PomodoroCalculator } from "./components/PomodoroCalculator"; // <-- novo import
 
 interface Turno {
   entrada: string;

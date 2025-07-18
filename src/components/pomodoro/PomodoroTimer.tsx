@@ -12,6 +12,8 @@ const DURACOES = {
   "descanso-longo": 15 * 60,
 };
 
+const BEEP_DELAY_MS = 100;
+
 interface PomodoroTimerProps {
   contexto: PomodoroContext;
   setContexto: (c: PomodoroContext) => void;
@@ -39,7 +41,7 @@ export function PomodoroTimer({ contexto, setContexto, musica, setMusica }: Pomo
         setSegundos((s) => {
           if (s <= 1) {
             setRodando(false);
-            setTimeout(() => { audioBeep.current?.play(); }, 100);
+            setTimeout(() => { audioBeep.current?.play(); }, BEEP_DELAY_MS);
             return 0;
           }
           return s - 1;

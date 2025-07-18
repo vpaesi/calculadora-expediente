@@ -1,4 +1,6 @@
+
 import { useState, useRef, useEffect } from "react";
+import { formatarTempo } from "../utils/time";
 
 const audioFoco =
   "https://cdn.pixabay.com/audio/2022/07/26/audio_124bfa4b6e.mp3";
@@ -49,13 +51,7 @@ export function PomodoroCalculator() {
     audio.play();
   }
 
-  function formatarTempo(seg: number) {
-    const m = Math.floor(seg / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (seg % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
-  }
+
 
   function handleStartPause() {
     setRodando((r) => !r);

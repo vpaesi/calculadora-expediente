@@ -49,7 +49,7 @@ export function PomodoroTaskList() {
   }
 
   function handleAdd(description: string) {
-    setTasks([...tasks, { description, finished: false, id: Date.now().toString() }]);
+    setTasks([...tasks, { description, finished: false, id: crypto.randomUUID() }]);
   }
 
   function handleEdit(description: string) {

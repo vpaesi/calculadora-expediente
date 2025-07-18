@@ -88,10 +88,6 @@ export function PomodoroTaskList() {
   return (
     <div className="w-full max-w-lg bg-white dark:bg-gray-900 rounded-xl border border-gray-300 dark:border-gray-700 shadow-md p-6 mb-6 relative">
       <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-2 border-b border-gray-200 dark:border-gray-700 pb-4 mb-4 relative text-base md:text-lg lg:text-xl">
-        <div className="flex flex-col">
-          <span className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-widest">#Em andamento:</span>
-          <span className="text-base text-gray-900 dark:text-gray-100 font-medium min-h-[1.5rem]">{selectedTask ? selectedTask.description : ""}</span>
-        </div>
         <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 font-unbounded">Lista de tarefas:</h2>
         <div className="relative flex items-center">
           <button

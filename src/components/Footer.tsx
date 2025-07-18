@@ -33,7 +33,7 @@ export function Footer() {
         .
       </p>
       <p className="mt-2">
-        Beta version 1.2 released 18.07.25.
+        v. 2.0.0 released on 2025-07-18
       </p>
     </footer>
   );

@@ -1,3 +1,4 @@
+import PomodoroApp from "./components/pomodoro/PomodoroApp";
 import { useState, useEffect } from "react";
 import { ResumoJornada } from "./components/ResumoJornada";
 import { ListaDeTurnos } from "./components/ListaDeTurnos";
@@ -50,7 +51,9 @@ export default function App() {
   }
 
   const [turnos, setTurnos] = useState<Turno[]>([{ entrada: "", saida: "" }]);
-  const [tempoDesejado, setTempoDesejado] = useState<string>("6");
+  const [tempoDesejadoHoras, setTempoDesejadoHoras] = useState<string>("8");
+  const [tempoDesejadoMinutos, setTempoDesejadoMinutos] = useState<string>("0");
+  const [usarPomodoro, setUsarPomodoro] = useState(false);
 
   function atualizarTurno(
     idx: number,
@@ -84,59 +87,80 @@ export default function App() {
     return soma;
   }
 
+  function calculaMinutosDesejados(): number {
+    const horas = Number(tempoDesejadoHoras) || 0;
+    const minutos = Number(tempoDesejadoMinutos) || 0;
+    return horas * 60 + minutos;
+  }
+
   function calculaHorarioFinal(): string | null {
     const totalTrabalhado = calculaMinutosTrabalhados();
-    const tempoDesejadoMinutos = Number(tempoDesejado) * 60;
+    const tempoDesejadoMinutosTotal = calculaMinutosDesejados();
     if (
-      isNaN(tempoDesejadoMinutos) ||
-      tempoDesejadoMinutos <= totalTrabalhado
+      isNaN(tempoDesejadoMinutosTotal) ||
+      tempoDesejadoMinutosTotal <= totalTrabalhado
     ) {
       return null;
     }
-    const faltam = tempoDesejadoMinutos - totalTrabalhado;
+    const faltam = tempoDesejadoMinutosTotal - totalTrabalhado;
 
-    // Procura se há um turno em aberto (entrada preenchida e saída vazia)
     for (let i = turnos.length - 1; i >= 0; i--) {
       const ent = parseHorario(turnos[i].entrada);
       const sai = parseHorario(turnos[i].saida);
       if (ent !== null && (!turnos[i].saida || sai === null)) {
-        // Usuário está no meio de um turno, sugira a saída
         return formatHorario(ent + faltam);
       }
       if (ent !== null && sai !== null && sai >= ent) {
-        // Último turno completo, continue lógica padrão
         return formatHorario(sai + faltam);
       }
     }
-
-    // Se não encontrou nenhum horário válido, retorna null
     return null;
   }
 
   const horarioFinal = calculaHorarioFinal();
   const minutosTrabalhados = calculaMinutosTrabalhados();
+  const tempoDesejadoMinutosTotal = calculaMinutosDesejados();
 
   return (
-    <Container>
-      <Header tema={tema} toggleTema={toggleTema} />
-      <CampoTempoDesejado
-        tempoDesejado={tempoDesejado}
-        setTempoDesejado={setTempoDesejado}
-      />
-      <ListaDeTurnos
-        turnos={turnos}
-        atualizarTurno={atualizarTurno}
-        adicionarTurno={adicionarTurno}
-        removerTurno={removerTurno} // <-- Passe aqui!
-      />
-      <SectionDivider />
-      <ResumoJornada
-        minutosTrabalhados={minutosTrabalhados}
-        horarioFinal={horarioFinal}
-        tempoDesejado={tempoDesejado}
-      />
-      <SectionDivider />
-      <Footer />
-    </Container>
+    <div className="min-h-screen w-full flex items-center justify-center bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 px-2 md:px-6">
+      <div
+        className={`w-full flex flex-col items-center justify-center gap-8
+        ${usarPomodoro ? "lg:flex-row lg:items-start lg:justify-center" : ""}`}
+        style={{ minHeight: '80vh' }}
+      >
+        <div className="w-full max-w-lg flex-shrink-0">
+          <Container>
+            <Header tema={tema} toggleTema={toggleTema} />
+            <CampoTempoDesejado
+              tempoDesejadoHoras={tempoDesejadoHoras}
+              tempoDesejadoMinutos={tempoDesejadoMinutos}
+              setTempoDesejadoHoras={setTempoDesejadoHoras}
+              setTempoDesejadoMinutos={setTempoDesejadoMinutos}
+              usarPomodoro={usarPomodoro}
+              setUsarPomodoro={setUsarPomodoro}
+            />
+            <ListaDeTurnos
+              turnos={turnos}
+              atualizarTurno={atualizarTurno}
+              adicionarTurno={adicionarTurno}
+              removerTurno={removerTurno}
+            />
+            <SectionDivider />
+            <ResumoJornada
+              minutosTrabalhados={minutosTrabalhados}
+              horarioFinal={horarioFinal}
+              tempoDesejadoMinutos={tempoDesejadoMinutosTotal}
+            />
+            <SectionDivider />
+            <Footer />
+          </Container>
+        </div>
+        {usarPomodoro && (
+          <div className="w-full max-w-lg flex flex-col items-center justify-center lg:mt-0 mt-8">
+            <PomodoroApp />
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

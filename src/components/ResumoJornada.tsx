@@ -1,13 +1,16 @@
+
+import { formatarHorasMinutos } from "../utils/time";
+
 interface ResumoJornadaProps {
   minutosTrabalhados: number;
   horarioFinal: string | null;
-  tempoDesejado: string;
+  tempoDesejadoMinutos: number;
 }
 
 export function ResumoJornada({
   minutosTrabalhados,
   horarioFinal,
-  tempoDesejado,
+  tempoDesejadoMinutos,
 }: ResumoJornadaProps) {
   const nenhumHorario = minutosTrabalhados === 0 && !horarioFinal;
   const jornadaCompleta = !nenhumHorario && !horarioFinal;
@@ -22,7 +25,7 @@ export function ResumoJornada({
     >
       <p>
         Total trabalhado até agora:{" "}
-        <strong>{(minutosTrabalhados / 60).toFixed(2)} horas</strong>
+        <strong>{formatarHorasMinutos(minutosTrabalhados)}</strong>
       </p>
       {nenhumHorario ? (
         <p className="mt-2 text-gray-600 dark:text-gray-400">
@@ -31,7 +34,7 @@ export function ResumoJornada({
       ) : horarioFinal ? (
         <p className="mt-2 text-red-700 dark:text-red-400 font-semibold">
           Precisa trabalhar até às <span>{horarioFinal}</span> para fechar{" "}
-          {tempoDesejado} horas
+          {formatarHorasMinutos(tempoDesejadoMinutos)}
         </p>
       ) : (
         <p className="mt-2 text-green-900 dark:text-green-100 font-semibold">

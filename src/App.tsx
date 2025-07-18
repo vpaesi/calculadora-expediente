@@ -1,3 +1,4 @@
+import PomodoroApp from "./components/pomodoro/PomodoroApp";
 import { useState, useEffect } from "react";
 import { ResumoJornada } from "./components/ResumoJornada";
 import { ListaDeTurnos } from "./components/ListaDeTurnos";
@@ -153,8 +154,8 @@ export default function App() {
         </Container>
       </div>
       {usarPomodoro && (
-      <div style={{ marginRight: 0, padding: 0, flex: 2, justifyContent: "center" }}>
-          <PomodoroCalculator />
+        <div style={{ marginRight: 0, padding: 0, flex: 2, justifyContent: "center" }}>
+          <PomodoroApp />
         </div>
       )}
     </div>

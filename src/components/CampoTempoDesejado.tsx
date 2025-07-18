@@ -55,15 +55,20 @@ export function CampoTempoDesejado({
         />
         <label className="font-medium ml-1">min</label>
       </div>
-      <div className="mt-4 flex items-center">
-        <input
-          id="pomodoro-toggle"
-          type="checkbox"
-          checked={usarPomodoro}
-          onChange={(e) => setUsarPomodoro(e.target.checked)}
-          className="form-checkbox h-5 w-5 text-red-600 transition"
-        />
-        <label htmlFor="pomodoro-toggle" className="ml-2 text-sm font-medium">
+      <div className="mt-4 flex items-center gap-2">
+        <label className="flex items-center cursor-pointer">
+          <input
+            id="pomodoro-toggle"
+            type="checkbox"
+            checked={usarPomodoro}
+            onChange={(e) => setUsarPomodoro(e.target.checked)}
+            className="sr-only peer"
+          />
+          <div className="w-10 h-6 bg-gray-300 rounded-full peer-checked:bg-purple-400 relative transition-colors">
+            <div className="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full transition-all peer-checked:left-5"></div>
+          </div>
+        </label>
+        <label htmlFor="pomodoro-toggle" className="ml-2 text-sm font-medium select-none text-gray-900 dark:text-gray-100">
           Desejo utilizar o método Pomodoro durante o expediente
         </label>
       </div>

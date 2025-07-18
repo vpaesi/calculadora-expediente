@@ -9,12 +9,11 @@ export function TemaToggle({ tema, toggleTema }: TemaToggleProps) {
   return (
     <button
       onClick={toggleTema}
-      className="px-3 py-1 border rounded
-        border-red-600 dark:border-red-400
-        text-red-600 dark:text-red-400
-        hover:bg-red-600 hover:text-white
-        dark:hover:bg-red-400 dark:hover:text-gray-900
-        transition-colors"
+      className={`px-4 py-2 rounded-lg text-lg font-medium transition-colors border border-transparent
+        ${tema === "dark"
+          ? "bg-yellow-400 text-gray-900 font-bold hover:bg-yellow-300"
+          : "bg-gray-800 text-white font-bold hover:bg-gray-700"}
+      `}
       aria-label="Alternar tema claro/escuro"
       title="Alternar tema claro/escuro"
     >

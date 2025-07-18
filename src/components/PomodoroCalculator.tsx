@@ -42,7 +42,6 @@ export function PomodoroCalculator() {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
     };
-    // eslint-disable-next-line
   }, [rodando, modo]);
 
   function tocarAudio(tipo: "foco" | "descanso") {

@@ -60,33 +60,23 @@ export function TurnoInput({
       <div className="flex flex-col flex-1">
         <button
           onClick={adicionarTurno}
-          className="w-full bg-red-600 hover:bg-red-700 text-white 
-            font-semibold text-sm 
-            border border-gray-300 dark:border-gray-700 
-            py-2 rounded 
-            focus:outline-none focus:ring-2 transition-colors"
-          style={{ marginTop: "1.5rem" }}
+          className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-purple-400 to-blue-900 text-white font-semibold text-base shadow-md hover:from-purple-500 hover:to-blue-800 transition mt-6"
         >
-          +
+          <span className="text-lg">+</span>
         </button>
       </div>
       <div className="flex flex-col flex-1">
         <button
           onClick={() => removerTurno(idx)}
-          className="w-full bg-gray-300 hover:bg-gray-400 text-gray-800 
-            font-semibold text-sm 
-            border border-gray-300 dark:border-gray-700 
-            py-2 rounded 
-            focus:outline-none focus:ring-2 transition-colors disabled:opacity-50"
+          className="w-full flex items-center justify-center gap-2 px-4 py-2 rounded-full bg-gradient-to-b from-gray-300 to-gray-400 text-gray-800 font-semibold text-base shadow-md hover:from-gray-400 hover:to-gray-500 transition mt-6 disabled:opacity-50"
           disabled={totalTurnos <= 1}
           title={
             totalTurnos <= 1
               ? "Deve haver pelo menos um turno"
               : "Remover turno"
           }
-          style={{ marginTop: "1.5rem" }}
         >
-          -
+          <span className="text-lg">-</span>
         </button>
       </div>
     </div>

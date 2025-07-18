@@ -2,7 +2,7 @@ export function Footer() {
   return (
     <footer className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400">
       <p>
-        Desenvolvido por{" "}
+        Aplicação desenvolvida por{" "}
         <a
           href="https://vitoria-de-camargo.vercel.app/"
           className="text-blue-600 dark:text-blue-400 hover:underline"
@@ -21,6 +21,19 @@ export function Footer() {
           GitHub
         </a>
         .
+        Pomodoro ib:{" "}
+        <a
+          href="https://krjorn.github.io/fokus/"
+          className="text-blue-600 dark:text-blue-400 hover:underline"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Fokus
+        </a>
+        .
+      </p>
+      <p className="mt-2">
+        Beta version 1.2 released 18.07.25.
       </p>
     </footer>
   );
